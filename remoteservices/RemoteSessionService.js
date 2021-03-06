@@ -14,6 +14,18 @@ async function createSession(uuid) {
     return data;
 }
 
+/**
+ * 
+ * @param {String} token 
+ * @returns {Promise<{ token:String, uuid:String }>}
+ */
+async function getSessionByToken(token) {
+
+    const { data } = await axios.get(`${USER_SERVICE_BASE}/api/session/${token}`);
+    return data;
+}
+
 module.exports = {
     createSession,
+    getSessionByToken,
 };

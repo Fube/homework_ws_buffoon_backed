@@ -2,6 +2,7 @@ const { default: axios } = require('axios');
 const { Router } = require('express');
 const userService = require('../remoteservices/RemoteUserService');
 const sessionService = require('../remoteservices/RemoteSessionService');
+const ratingService = require('../remoteservices/RemoteRatingService');
 
 const router = Router();
 
@@ -57,6 +58,35 @@ router.post('/login', async (req, res) => {
             return res.status(status).send(data);
         }
         return res.status(500).send(e.message);
+    }
+});
+
+router.get('/:token', async (req, res) => {
+
+    const { token } = req.params;
+
+    if(!token){
+        return res.status(400).send('Missing token');
+    }
+
+    try{
+
+        const { uuid } = await sessionService.getSessionByToken(token);
+        const [
+            user,
+            ratings
+        ] = await Promise.all([
+            userService.getUser(uuid),
+            ratingService.getAllRatingsForUser(uuid),
+        ]);
+        const { email, username } = user;
+        
+        return res.status(200).json({ username, email, ratings });
+    }
+    catch(e) {
+        
+        console.log(e);
+        return res.status(500).send('Server error');
     }
 });
 

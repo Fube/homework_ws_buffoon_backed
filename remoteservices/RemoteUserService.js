@@ -20,14 +20,13 @@ async function createUser(user) {
 
     return data;
 }
-
 /**
  * 
- * @param {String} email 
+ * @param {String} uuid 
  */
-async function getUser(email) {
+ async function getUser(uuid) {
     
-    const { data } = await axios.get(`${USER_SERVICE_BASE}/api/user/${email}`);
+    const { data } = await axios.get(`${USER_SERVICE_BASE}/api/user/${uuid}`);
     return data;
 }
 
