@@ -43,8 +43,20 @@ async function createUser(user) {
     return data;
 }
 
+/**
+ * 
+ * @param {String} email 
+ * @returns {Promise<any>}
+ */
+async function getUserByEmail(email) {
+
+    const { data } = await axios.get(`${USER_SERVICE_BASE}/api/user/email/${email}`);
+    return data;
+}
+
 module.exports = {
     createUser,
     getUser,
+    getUserByEmail,
     compare,
 };

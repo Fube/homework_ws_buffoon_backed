@@ -45,7 +45,7 @@ router.post('/login', async (req, res) => {
             return res.status(401).send('Invalid email/password combination');
         }
 
-        const { _id, username } = await userService.getUser(email);
+        const { _id, username } = await userService.getUserByEmail(email);
         const { token } = await sessionService.createSession(_id);
 
         return res.status(200).json({ token, username });

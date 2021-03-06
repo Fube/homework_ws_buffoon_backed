@@ -19,12 +19,12 @@ async function getAllRatingsForUser(uuid) {
 
 /**
  * 
- * @param {{ jokesGUID:String, userGUID:String, opinion:Boolean }} rating
+ * @param {{ jokeGUID:String, userGUID:String, opinion:Boolean }} rating
  * @returns {Promise<Rating>}
  */
-async function createRating({ jokesGUID, userGUID, opinion }) {
+async function createRating(rating) {
 
-    const { data } = await axios.post(`${RATING_SERVICE_BASE}/api/ratings`);
+    const { data } = await axios.post(`${RATING_SERVICE_BASE}/api/ratings`, { ...rating });
     return data;
 }
 
